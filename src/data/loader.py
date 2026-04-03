@@ -129,7 +129,13 @@ def get_dataset(
         )
         
         dataset = dataset.map(preprocess_func, batched=True, remove_columns=column_names, **kwargs)
-        
+
+        # When all examples have empty retro_product_ids (e.g. small example datasets),
+        # HuggingFace datasets infers the column type as null. Explicitly cast to int64.
+        from datasets import Sequence, Value
+        if dataset.features.get("retro_product_ids") is not None:
+            dataset = dataset.cast_column("retro_product_ids", Sequence(Value("int64")))
+
         if data_args.tokenized_path is not None:
             if training_args.should_save:
                 dataset.save_to_disk(data_args.tokenized_path)
