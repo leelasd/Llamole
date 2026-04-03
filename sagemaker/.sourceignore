@@ -1,0 +1,9 @@
+saves/
+.git/
+__pycache__/
+*.pyc
+.env
+data/molqa_*.json
+docs/
+assets/
+requirements.txt

@@ -47,13 +47,12 @@ def remove_extra_spaces(text):
     return cleaned_text.strip()
 
 def run_eval(args: Optional[Dict[str, Any]] = None) -> None:
-    print(args)
-    raise ValueError('stop')
     model_args, data_args, training_args, finetuning_args, generating_args = (
         get_train_args(args)
     )
 
-    if data_args.dataset in ["molqa", "molqa_drug", "molqa_material"]:
+    if data_args.dataset in ["molqa", "molqa_drug", "molqa_material",
+                              "molqa_material_examples", "molqa_drug_examples"]:
         run_molqa(
             model_args, data_args, training_args, finetuning_args, generating_args
         )
